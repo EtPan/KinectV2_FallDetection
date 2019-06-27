@@ -8,7 +8,7 @@ using  namespace DirectX;
 
 static DWORD  framenumber = 0; 
 static DWORD  colornumber = 0;
-static DWORD  depthnumber = 0;			//Êı¾İÖ¡±àºÅ
+static DWORD  depthnumber = 0;			//æ•°æ®å¸§ç¼–å·
 static DWORD  tempnumber  = 0;
 
 int vDetection,HeightDetection;
@@ -43,7 +43,7 @@ CBodyBasics::~CBodyBasics()
 	SafeRelease(mySensor);
 }
 
-//³õÊ¼»¯
+//åˆå§‹åŒ–
 HRESULT CBodyBasics::InitKinect()
 {
 	HRESULT hr;
@@ -59,7 +59,7 @@ HRESULT CBodyBasics::InitKinect()
 		myColorSource->get_FrameDescription(&myDescription);
 		myDescription->get_Height(&COLORHEIGHT);
 		myDescription->get_Width(&COLORWIDTH);
-		myColorSource->OpenReader(&myColorReader);			//ÒÔÉÏÎªColorÖ¡µÄ×¼±¸£¬Ö±½Ó¿ªºÃReader
+		myColorSource->OpenReader(&myColorReader);			//ä»¥ä¸Šä¸ºColorå¸§çš„å‡†å¤‡ï¼Œç›´æ¥å¼€å¥½Reader
 
 		IDepthFrameSource	* myDepthSource = nullptr;
 		int DEPTHHEIGHT = 0, DEPTHWIDTH = 0;
@@ -67,11 +67,11 @@ HRESULT CBodyBasics::InitKinect()
 		myDepthSource->get_FrameDescription(&myDescription);
 		myDescription->get_Height(&DEPTHHEIGHT);
 		myDescription->get_Width(&DEPTHWIDTH);
-		myDepthSource->OpenReader(&myDepthReader);			//ÒÔÉÏÎªDepthÖ¡µÄ×¼±¸£¬Ö±½Ó¿ªºÃReader
+		myDepthSource->OpenReader(&myDepthReader);			//ä»¥ä¸Šä¸ºDepthå¸§çš„å‡†å¤‡ï¼Œç›´æ¥å¼€å¥½Reader
 
 		IBodyFrameSource	* myBodySource = nullptr;
 		mySensor->get_BodyFrameSource(&myBodySource);
-		myBodySource->OpenReader(&myBodyReader);			//ÒÔÉÏÎªBodyÖ¡µÄ×¼±¸£¬Ö±½Ó¿ªºÃReader
+		myBodySource->OpenReader(&myBodyReader);			//ä»¥ä¸Šä¸ºBodyå¸§çš„å‡†å¤‡ï¼Œç›´æ¥å¼€å¥½Reader
 		
 		IInfraredFrameSource* myInfraredSource = nullptr;
 		mySensor->get_InfraredFrameSource(&myInfraredSource);
@@ -92,46 +92,46 @@ HRESULT CBodyBasics::InitKinect()
 	return hr;
 }
 
-//±£´æ¹Ç÷ÀÍ¼
+//ä¿å­˜éª¨éª¼å›¾
 void CBodyBasics::SaveBodyImg()
 {
 	stringstream stream0, stream1;
 	string str, filepath, str1;
-	filepath = "E:\\temp\\";			//ÉèÖÃ¹Ì¶¨±£´æÂ·¾¶
+	filepath = "E:\\temp\\";			//è®¾ç½®å›ºå®šä¿å­˜è·¯å¾„
 
 	if (filepath.empty())
-		filepath = "E:\\temp\\";			//ÉèÖÃÄ¬ÈÏ¹Ì¶¨±£´æÂ·¾¶
+		filepath = "E:\\temp\\";			//è®¾ç½®é»˜è®¤å›ºå®šä¿å­˜è·¯å¾„
 	else
 		filepath += "/";
 
-	//´ÓÑ¡ÔñÎÄ¼ş¼ĞÀïÃæ»ñÈ¡µ±Ç°Ñ¡ÔñµÄÂ·¾¶
-	stream1 << framenumber;        //´ÓlongĞÍÊı¾İÊäÈë
-	stream1 >> str;					//×ª»»Îª string
-	str1 = "³É¹¦±£´æµÚ " + str + " Ö¡¹Ç÷ÀÍ¼\r\n";
+	//ä»é€‰æ‹©æ–‡ä»¶å¤¹é‡Œé¢è·å–å½“å‰é€‰æ‹©çš„è·¯å¾„
+	stream1 << framenumber;        //ä»longå‹æ•°æ®è¾“å…¥
+	stream1 >> str;					//è½¬æ¢ä¸º string
+	str1 = "æˆåŠŸä¿å­˜ç¬¬ " + str + " å¸§éª¨éª¼å›¾\r\n";
 
 	if (BodyImg.data){
 		imwrite(filepath + str + "body.bmp", BodyImg);
 		cout << str1;
 		cout << str + "depth.bmp" << endl;}
 	else{
-		cout << "Ã»ÓĞÊı¾İ£¬±£´æÊ§°Ü" << endl;}
+		cout << "æ²¡æœ‰æ•°æ®ï¼Œä¿å­˜å¤±è´¥" << endl;}
 }
 
-//±£´æÉî¶ÈÍ¼
+//ä¿å­˜æ·±åº¦å›¾
 void CBodyBasics::SaveDepthImg()
 {
 	stringstream stream0, stream1;
 	string str, filepath, str1;
-	filepath = "E:\\temp\\";			//ÉèÖÃ¹Ì¶¨±£´æÂ·¾¶
+	filepath = "E:\\temp\\";			//è®¾ç½®å›ºå®šä¿å­˜è·¯å¾„
 
 	if (filepath.empty())
-		filepath = "E:\\temp\\";			//ÉèÖÃÄ¬ÈÏ¹Ì¶¨±£´æÂ·¾¶
+		filepath = "E:\\temp\\";			//è®¾ç½®é»˜è®¤å›ºå®šä¿å­˜è·¯å¾„
 	else
 		filepath += "/";
 
-	stream1 << depthnumber;        //´ÓlongĞÍÊı¾İÊäÈë
-	stream1 >> str;					//×ª»»Îª string
-	str1 = "³É¹¦±£´æµÚ " + str + " Ö¡Éî¶ÈÍ¼\r\n";
+	stream1 << depthnumber;        //ä»longå‹æ•°æ®è¾“å…¥
+	stream1 >> str;					//è½¬æ¢ä¸º string
+	str1 = "æˆåŠŸä¿å­˜ç¬¬ " + str + " å¸§æ·±åº¦å›¾\r\n";
 
 	if (DepthImg.data)
 	{
@@ -141,7 +141,7 @@ void CBodyBasics::SaveDepthImg()
 	}
 	else
 	{
-		cout << "Ã»ÓĞÊı¾İ£¬±£´æÊ§°Ü" << endl;
+		cout << "æ²¡æœ‰æ•°æ®ï¼Œä¿å­˜å¤±è´¥" << endl;
 	}
 	/*if (InfraredImg.data)
 	{
@@ -151,57 +151,57 @@ void CBodyBasics::SaveDepthImg()
 	}
 	else
 	{
-		cout << "Ã»ÓĞÊı¾İ£¬±£´æÊ§°Ü" << endl;
+		cout << "æ²¡æœ‰æ•°æ®ï¼Œä¿å­˜å¤±è´¥" << endl;
 	}*/
 }
 
-//±£´æ²ÊÉ«Í¼
+//ä¿å­˜å½©è‰²å›¾
 void CBodyBasics::SaveColorImg()
 {
 	stringstream stream0, stream1;
 	string str, filepath, str1;
 	//CMFC_DEMO01Dlg *pDlg0 = CMFC_DEMO01Dlg::s_pDlg;
-	filepath = "E:\\temp\\";			//ÉèÖÃ¹Ì¶¨±£´æÂ·¾¶
-									//´ÓÑ¡ÔñÎÄ¼ş¼ĞÀïÃæ»ñÈ¡µ±Ç°Ñ¡ÔñµÄÂ·¾¶
+	filepath = "E:\\temp\\";			//è®¾ç½®å›ºå®šä¿å­˜è·¯å¾„
+									//ä»é€‰æ‹©æ–‡ä»¶å¤¹é‡Œé¢è·å–å½“å‰é€‰æ‹©çš„è·¯å¾„
 									//filepath = (pDlg0->m_edit).GetBuffer(0);
 	if (filepath.empty())
-		filepath = "E:\\temp\\";			//ÉèÖÃÄ¬ÈÏ¹Ì¶¨±£´æÂ·¾¶
+		filepath = "E:\\temp\\";			//è®¾ç½®é»˜è®¤å›ºå®šä¿å­˜è·¯å¾„
 	else
 		filepath += "/";
 
-	//´ÓÑ¡ÔñÎÄ¼ş¼ĞÀïÃæ»ñÈ¡µ±Ç°Ñ¡ÔñµÄÂ·¾¶
-	stream1 << colornumber;        //´ÓlongĞÍÊı¾İÊäÈë
-	stream1 >> str;					//×ª»»Îª string
-	str1 = "³É¹¦±£´æµÚ " + str + " Ö¡²ÊÉ«Í¼\r\n";
+	//ä»é€‰æ‹©æ–‡ä»¶å¤¹é‡Œé¢è·å–å½“å‰é€‰æ‹©çš„è·¯å¾„
+	stream1 << colornumber;        //ä»longå‹æ•°æ®è¾“å…¥
+	stream1 >> str;					//è½¬æ¢ä¸º string
+	str1 = "æˆåŠŸä¿å­˜ç¬¬ " + str + " å¸§å½©è‰²å›¾\r\n";
 	
 	if (ColorImg.data){
 		imwrite(filepath + str + "color.bmp", ColorImg);
 		cout << str1;
 		cout << str + "color.bmp" << endl;}
 	else{
-		cout << "Ã»ÓĞÊı¾İ£¬±£´æÊ§°Ü" << endl;}
+		cout << "æ²¡æœ‰æ•°æ®ï¼Œä¿å­˜å¤±è´¥" << endl;}
 }
 
-//ÓïÒôÑ¯ÎÊ
+//è¯­éŸ³è¯¢é—®
 void CBodyBasics::SpeechDetection()
 {
 
 }
 
-//·¢ËÍÓÊ¼ş±¨¾¯
+//å‘é€é‚®ä»¶æŠ¥è­¦
 void CBodyBasics::SendEmail()
 {
 	CSmtp smtp(
-		25,								/*smtp¶Ë¿Ú*/
-		"smtp.163.com",					/*smtp·şÎñÆ÷µØÖ·*/
-		"panet96@163.com",	/*ÄãµÄÓÊÏäµØÖ·*/
-		"PANCAST96",					/*ÓÊÏäÃÜÂë*/
-		"774834035@qq.com",	/*Ä¿µÄÓÊÏäµØÖ·*/
-		"WARNING",							/*Ö÷Ìâ*/
-		"¼ÒÖĞÓĞÈËµøµ¹£¡£¡£¡ËÙÀ´¾ÈÖú"		/*ÓÊ¼şÕıÎÄ*/
+		25,								/*smtpç«¯å£*/
+		"smtp.163.com",					/*smtpæœåŠ¡å™¨åœ°å€*/
+		"*******@163.com",	/*ä½ çš„é‚®ç®±åœ°å€*/
+		"**********",					/*é‚®ç®±å¯†ç */
+		"******@***.com",	/*ç›®çš„é‚®ç®±åœ°å€*/
+		"WARNING",							/*ä¸»é¢˜*/
+		"å®¶ä¸­æœ‰äººè·Œå€’ï¼ï¼ï¼é€Ÿæ¥æ•‘åŠ©"		/*é‚®ä»¶æ­£æ–‡*/
 		);
 
-	//Ìí¼Ó¸½¼şÊ±×¢Òâ,\Ò»¶¨ÒªĞ´³É\\£¬ÒòÎª×ªÒå×Ö·ûµÄÔµ¹Ê
+	//æ·»åŠ é™„ä»¶æ—¶æ³¨æ„,\ä¸€å®šè¦å†™æˆ\\ï¼Œå› ä¸ºè½¬ä¹‰å­—ç¬¦çš„ç¼˜æ•…
 	//string filePath("E:\\pic\\318body.bmp");
 	//smtp.AddAttachment(filePath);
 
@@ -212,18 +212,18 @@ void CBodyBasics::SendEmail()
 	if ((err = smtp.SendEmail_Ex()) != 0)
 	{
 		if (err == 1)
-			cout << "´íÎó1: ÓÉÓÚÍøÂç²»³©Í¨£¬·¢ËÍÊ§°Ü!" << endl;
+			cout << "é”™è¯¯1: ç”±äºç½‘ç»œä¸ç•…é€šï¼Œå‘é€å¤±è´¥!" << endl;
 		if (err == 2)
-			cout << "´íÎó2: ÓÃ»§Ãû´íÎó,ÇëºË¶Ô!" << endl;
+			cout << "é”™è¯¯2: ç”¨æˆ·åé”™è¯¯,è¯·æ ¸å¯¹!" << endl;
 		if (err == 3)
-			cout << "´íÎó3: ÓÃ»§ÃÜÂë´íÎó£¬ÇëºË¶Ô!" << endl;
+			cout << "é”™è¯¯3: ç”¨æˆ·å¯†ç é”™è¯¯ï¼Œè¯·æ ¸å¯¹!" << endl;
 		if (err == 4)
-			cout << "´íÎó4: Çë¼ì²é¸½¼şÄ¿Â¼ÊÇ·ñÕıÈ·£¬ÒÔ¼°ÎÄ¼şÊÇ·ñ´æÔÚ!" << endl;
+			cout << "é”™è¯¯4: è¯·æ£€æŸ¥é™„ä»¶ç›®å½•æ˜¯å¦æ­£ç¡®ï¼Œä»¥åŠæ–‡ä»¶æ˜¯å¦å­˜åœ¨!" << endl;
 	}
 	//system("pause");
 }
 
-//»ñÈ¡ÏµÍ³Ê±¼ä
+//è·å–ç³»ç»Ÿæ—¶é—´
 string CBodyBasics::getTime()
 {
 	time_t timep;
@@ -235,19 +235,19 @@ string CBodyBasics::getTime()
 
 void CBodyBasics::curl_test()
 {
-	curl_global_init(CURL_GLOBAL_ALL); // Ê×ÏÈÈ«¾Ö³õÊ¼»¯CURL
-	CURL* curl = curl_easy_init(); // ³õÊ¼»¯CURL¾ä±ú
+	curl_global_init(CURL_GLOBAL_ALL); // é¦–å…ˆå…¨å±€åˆå§‹åŒ–CURL
+	CURL* curl = curl_easy_init(); // åˆå§‹åŒ–CURLå¥æŸ„
 	if (NULL == curl) {
 		printf("(curl is NULL!\r\n");}
-	// ÉèÖÃÄ¿±êURL
-	curl_easy_setopt(curl, CURLOPT_URL, "https://sc.ftqq.com/SCU25177T14196ec9449d9ea644db9ace6b4b91ba5adc30fcf2afa.send?text=warning&desp=SomeoneFellDownAtHome!!");
-	// Ö´ĞĞÒ»´ÎURLÇëÇó
+	// è®¾ç½®ç›®æ ‡URL
+	curl_easy_setopt(curl, CURLOPT_URL, "https://sc.ftqq.com/************=SomeoneFellDownAtHome!!");
+	// æ‰§è¡Œä¸€æ¬¡URLè¯·æ±‚
 	CURLcode res = curl_easy_perform(curl);
-	// ÇåÀí¸É¾»
+	// æ¸…ç†å¹²å‡€
 	curl_easy_cleanup(curl);	
 }
 
-//»­ÉíÌå
+//ç”»èº«ä½“
 void CBodyBasics::DrawBody(const Joint * joints, const DepthSpacePoint*depthSpacePosition)
 {
 	// Draw the bones
@@ -288,41 +288,41 @@ void CBodyBasics::DrawBody(const Joint * joints, const DepthSpacePoint*depthSpac
 	// Draw the joints
 	for (int j = 0; j < JointType_Count; ++j)
 	{
-		if (joints[j].TrackingState == TrackingState_Inferred)//²»È·¶¨µÄ¹Ø½Úµã ÓÃÇàÉ«
+		if (joints[j].TrackingState == TrackingState_Inferred)//ä¸ç¡®å®šçš„å…³èŠ‚ç‚¹ ç”¨é’è‰²
 		{
 			circle(BodyImg, CvPoint(depthSpacePosition[j].X, depthSpacePosition[j].Y), 3, cvScalar(0, 255, 255), -1, 8, 0);
 		}
-		else if (joints[j].TrackingState == TrackingState_Tracked) //È·¶¨µÄ¹Ø½Úµã ÓÃ×ÏÉ«
+		else if (joints[j].TrackingState == TrackingState_Tracked) //ç¡®å®šçš„å…³èŠ‚ç‚¹ ç”¨ç´«è‰²
 		{
 			circle(BodyImg, CvPoint(depthSpacePosition[j].X, depthSpacePosition[j].Y), 3, cvScalar(255, 0, 255), -1, 8, 0);
 		}
 	}
 }
 
-//»­ÊÖÊÆ×´Ì¬
+//ç”»æ‰‹åŠ¿çŠ¶æ€
 void CBodyBasics::DrawHandState(HandState handState, const DepthSpacePoint handPosition)
 {
-	//¸ø²»Í¬µÄÊÖÊÆ·ÖÅä²»Í¬ÑÕÉ«
+	//ç»™ä¸åŒçš„æ‰‹åŠ¿åˆ†é…ä¸åŒé¢œè‰²
 	CvScalar color;
 	switch (handState)
 	{
 	case HandState_Open:
-		color = cvScalar(255, 0, 0);	//ÊÖÊÇÕÅ¿ªµÄ×´Ì¬£¬ÓÃÀ¶É«±íÊ¾
+		color = cvScalar(255, 0, 0);	//æ‰‹æ˜¯å¼ å¼€çš„çŠ¶æ€ï¼Œç”¨è“è‰²è¡¨ç¤º
 		break;
 	case HandState_Closed:
-		color = cvScalar(0, 255, 0);	//ÊÖÊÇ±ÕºÏµÄ×´Ì¬£¬ÓÃÂÌÉ«±íÊ¾
+		color = cvScalar(0, 255, 0);	//æ‰‹æ˜¯é—­åˆçš„çŠ¶æ€ï¼Œç”¨ç»¿è‰²è¡¨ç¤º
 		break;
 	case HandState_Lasso:
-		color = cvScalar(0, 0, 255);	//ÊÖÊÇ½éÓÚÕÅ¿ªºÍ±ÕºÏµÄ×´Ì¬£¬ÓÃºìÉ«±íÊ¾
+		color = cvScalar(0, 0, 255);	//æ‰‹æ˜¯ä»‹äºå¼ å¼€å’Œé—­åˆçš„çŠ¶æ€ï¼Œç”¨çº¢è‰²è¡¨ç¤º
 		break;
-	default:							//Èç¹ûÃ»ÓĞÈ·¶¨µÄÊÖÊÆ£¬¾Í²»Òª»­
+	default:							//å¦‚æœæ²¡æœ‰ç¡®å®šçš„æ‰‹åŠ¿ï¼Œå°±ä¸è¦ç”»
 		return;
 	}
 
 	circle(BodyImg,cvPoint(handPosition.X, handPosition.Y),20, color, -1);
 }
 
-//»­¹Ç¼Ü
+//ç”»éª¨æ¶
 void CBodyBasics::DrawBone(const Joint * pJoints, const DepthSpacePoint * depthSpacePosition, JointType joint0, JointType joint1)
 {
 	TrackingState joint0State = pJoints[joint0].TrackingState;
@@ -346,17 +346,17 @@ void CBodyBasics::DrawBone(const Joint * pJoints, const DepthSpacePoint * depthS
 	// We assume all drawn bones are inferred unless BOTH joints are tracked
 	if ((joint0State == TrackingState_Tracked) && (joint1State == TrackingState_Tracked))
 	{
-		//·Ç³£È·¶¨µÄ¹Ç¼Ü£¬ÓÃ°×É«Ö±Ïß
+		//éå¸¸ç¡®å®šçš„éª¨æ¶ï¼Œç”¨ç™½è‰²ç›´çº¿
 		line(BodyImg, p1, p2, cvScalar(255, 255, 255), 6);
 	}
 	else
 	{
-		//²»È·¶¨µÄ¹Ç¼Ü£¬ÓÃºìÉ«Ö±Ïß
+		//ä¸ç¡®å®šçš„éª¨æ¶ï¼Œç”¨çº¢è‰²ç›´çº¿
 		line(BodyImg, p1, p2, cvScalar(0, 0, 255), 1);
 	}
 }
 
-//½Ç¶È²âÁ¿
+//è§’åº¦æµ‹é‡
 DOUBLE CBodyBasics::Angle(const DirectX::XMVECTOR* vec, JointType jointA, JointType jointB, JointType jointC)
 {
 	double angle = 0.0;
@@ -366,12 +366,12 @@ DOUBLE CBodyBasics::Angle(const DirectX::XMVECTOR* vec, JointType jointA, JointT
 
 	XMVECTOR vAngle = XMVector3AngleBetweenVectors(vBA, vBC);
 
-	angle = XMVectorGetX(vAngle) * 180.0 * XM_1DIVPI;    // XM_1DIVPI: An optimal representation of 1 / ¦Ğ
+	angle = XMVectorGetX(vAngle) * 180.0 * XM_1DIVPI;    // XM_1DIVPI: An optimal representation of 1 / Ï€
 
 	return angle;
 }
 
-//¾àÀë²âÁ¿
+//è·ç¦»æµ‹é‡
 double CBodyBasics::Distance(Joint p1, Joint p2)
 {
 	double dist = 0;
@@ -380,10 +380,10 @@ double CBodyBasics::Distance(Joint p1, Joint p2)
 	return dist;
 }
 
-//Êı¾İ¸üĞÂ
+//æ•°æ®æ›´æ–°
 void CBodyBasics::Update()
 {
-	//ÏÔÊ¾ÏµÍ³Ê±¼ä
+	//æ˜¾ç¤ºç³»ç»Ÿæ—¶é—´
 	string time = getTime();
 	//*********************Color
 	ColorImg.setTo(0);
@@ -394,8 +394,8 @@ void CBodyBasics::Update()
 
 	putText(ColorImg, time, cvPoint(0, 1000), CV_FONT_HERSHEY_COMPLEX, 2, cvScalar(0, 0, 255), 2);
 
-	//²ÊÉ«Êı¾İ´¦Àí¼°ÏÔÊ¾³ÌĞò´ıĞ´
-	//OpenCVÏÔÊ¾
+	//å½©è‰²æ•°æ®å¤„ç†åŠæ˜¾ç¤ºç¨‹åºå¾…å†™
+	//OpenCVæ˜¾ç¤º
 	namedWindow("ColorImg", 0);
 	resizeWindow("ColorImg", 640, 480);
 	imshow("ColorImg", ColorImg);
@@ -409,10 +409,10 @@ void CBodyBasics::Update()
 	IDepthFrame* myDepthFrame = nullptr;
 	while (myDepthReader->AcquireLatestFrame(&myDepthFrame) != S_OK);
 	myDepthFrame->CopyFrameDataToArray(cDepthHeight * cDepthWidth, reinterpret_cast<UINT16*>(DepthImg.data));
-	DepthImg.convertTo(iDepthImg, CV_8U, 255.0f / 4500);//converto()µÚÒ»¸ö²ÎÊıÊÇÊä³ö¾ØÕó£¬µÚ¶ş¸öÊÇ×ª»»ÀàĞÍ£¬µÚÈı¸öÊÇËõ·ÅÒò×Ó£¬ÆäÖĞ4500ÊÇÉî¶ÈÊı¾İµÄ×î´ó¾àÀë
+	DepthImg.convertTo(iDepthImg, CV_8U, 255.0f / 4500);//converto()ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯è¾“å‡ºçŸ©é˜µï¼Œç¬¬äºŒä¸ªæ˜¯è½¬æ¢ç±»å‹ï¼Œç¬¬ä¸‰ä¸ªæ˜¯ç¼©æ”¾å› å­ï¼Œå…¶ä¸­4500æ˜¯æ·±åº¦æ•°æ®çš„æœ€å¤§è·ç¦»
 	putText(DepthImg, time, cvPoint(0, 400), CV_FONT_HERSHEY_COMPLEX, 0.5, cvScalar(0, 0, 255));
-	//Éî¶ÈÊı¾İ´¦Àí¼°ÏÔÊ¾³ÌĞò´ıĞ´  
-	//OpenCVÏÔÊ¾
+	//æ·±åº¦æ•°æ®å¤„ç†åŠæ˜¾ç¤ºç¨‹åºå¾…å†™  
+	//OpenCVæ˜¾ç¤º
 	namedWindow("DepthImg", 0);
 	resizeWindow("DepthImg", 640, 480);
 	imshow("DepthImg",iDepthImg);
@@ -431,7 +431,7 @@ void CBodyBasics::Update()
 	InfraredImg.create(iHeight,iWidth,CV_16UC1);
 	IInfraredFrame* myInfraredFrame = nullptr;
 	while(myInfraredReader->AcquireLatestFrame(&myInfraredFrame) == S_OK);
-	myInfraredFrame->CopyFrameDataToArray(iWidth * iHeight,reinterpret_cast<UINT16*>(InfraredImg.data));//Ç¿ÖÆ×ª»»Êı¾İÀàĞÍ
+	myInfraredFrame->CopyFrameDataToArray(iWidth * iHeight,reinterpret_cast<UINT16*>(InfraredImg.data));//å¼ºåˆ¶è½¬æ¢æ•°æ®ç±»å‹
 	putText(InfraredImg, time, cvPoint(0, 400), CV_FONT_HERSHEY_COMPLEX, 0.5, cvScalar(0, 0, 255));
 	namedWindow("InfraredImage");
 	imshow("InfraredImage", InfraredImg);*/
@@ -448,7 +448,7 @@ void CBodyBasics::Update()
 	
 	ProcessBody(BODY_COUNT, myBodies);
 
-	//OpencvÏÔÊ¾
+	//Opencvæ˜¾ç¤º
 	namedWindow("BodyImg", 0);
 	resizeWindow("BodyImg", 640, 480);
 	imshow("BodyImg", BodyImg);
@@ -460,11 +460,11 @@ void CBodyBasics::Update()
 	SafeRelease(myBodyFrame);
 }
 
-//ÉíÌåÊı¾İ´¦Àí
+//èº«ä½“æ•°æ®å¤„ç†
 void CBodyBasics::ProcessBody(int nBodyCount, IBody ** aBodyData)
 {
 	HRESULT hr;
-	FilterDoubleExponential filterKinect;	//»ô¶ûÌØË«Ö¸ÊıÂË²¨Æ÷
+	FilterDoubleExponential filterKinect;	//éœå°”ç‰¹åŒæŒ‡æ•°æ»¤æ³¢å™¨
 
 	for (int i = 0; i < nBodyCount; ++i)
 	{
@@ -472,26 +472,26 @@ void CBodyBasics::ProcessBody(int nBodyCount, IBody ** aBodyData)
 		if (myBody)
 		{
 			BOOLEAN bTracked = false;
-			hr = myBody->get_IsTracked(&bTracked);  //È·ÈÏ×·×Ù×´Ì¬
-			filterKinect.Update(myBody);			//Æ½»¬ºÍÎÈ¶¨ÉíÌå¹Ç¼Ü
+			hr = myBody->get_IsTracked(&bTracked);  //ç¡®è®¤è¿½è¸ªçŠ¶æ€
+			filterKinect.Update(myBody);			//å¹³æ»‘å’Œç¨³å®šèº«ä½“éª¨æ¶
 
 			if (SUCCEEDED(hr) && bTracked)
 			{
-				//´æ´¢¹Ø½ÚµãÀà
+				//å­˜å‚¨å…³èŠ‚ç‚¹ç±»
 				Joint joints[JointType::JointType_Count];
-				HandState leftHandState = HandState_Unknown;//×óÊÖ×´Ì¬
-				HandState rightHandState = HandState_Unknown;//ÓÒÊÖ×´Ì¬
+				HandState leftHandState = HandState_Unknown;//å·¦æ‰‹çŠ¶æ€
+				HandState rightHandState = HandState_Unknown;//å³æ‰‹çŠ¶æ€
 
-				//»ñÈ¡×óÓÒÊÖ×´Ì¬
+				//è·å–å·¦å³æ‰‹çŠ¶æ€
 				myBody->get_HandLeftState(&leftHandState);
 				myBody->get_HandRightState(&rightHandState);
-				//´æ´¢Éî¶È×ø±êÏµÖĞ¹Ø½ÚµãÎ»ÖÃ
+				//å­˜å‚¨æ·±åº¦åæ ‡ç³»ä¸­å…³èŠ‚ç‚¹ä½ç½®
 				DepthSpacePoint *depthSpacePosition = new DepthSpacePoint[_countof(joints)];
 				
-				//»ñÈ¡¹Ø½ÚµãÀà
+				//è·å–å…³èŠ‚ç‚¹ç±»
 				if (myBody->GetJoints(JointType::JointType_Count, joints) == S_OK)
 				{
-					filterKinect.Update(joints);		//Æ½»¬ÉíÌåÃ¿¸ö¹Ç÷Àµã
+					filterKinect.Update(joints);		//å¹³æ»‘èº«ä½“æ¯ä¸ªéª¨éª¼ç‚¹
 					
 					const DirectX::XMVECTOR* vec = filterKinect.GetFilteredJoints();    // Retrive Filtered Joints
 
@@ -499,7 +499,7 @@ void CBodyBasics::ProcessBody(int nBodyCount, IBody ** aBodyData)
 					char s[20];
 					sprintf_s(s, "Angle:%.0f", angle);
 					string strAngleInfo = s;
-					putText(BodyImg, strAngleInfo, cvPoint(0, 50), CV_FONT_HERSHEY_COMPLEX, 0.5, cvScalar(0, 0, 255)); // ÆÁÄ»ÉÏÏÔÊ¾½Ç¶ÈĞÅÏ¢
+					putText(BodyImg, strAngleInfo, cvPoint(0, 50), CV_FONT_HERSHEY_COMPLEX, 0.5, cvScalar(0, 0, 255)); // å±å¹•ä¸Šæ˜¾ç¤ºè§’åº¦ä¿¡æ¯
 					
 					for (int j = 0; j < _countof(joints); ++j)
 					{
@@ -512,7 +512,7 @@ void CBodyBasics::ProcessBody(int nBodyCount, IBody ** aBodyData)
 							CameraSpacePoint cameraSpacePoint = { x, y, z };
 							myMapper->MapCameraPointToDepthSpace(cameraSpacePoint, &depthSpacePosition[j]);
 							
-							//½«¹Ø½Úµã×ø±ê´ÓÉãÏñ»ú×ø±êÏµ£¨-1~1£©×ªµ½Éî¶È×ø±êÏµ£¨424*512£©
+							//å°†å…³èŠ‚ç‚¹åæ ‡ä»æ‘„åƒæœºåæ ‡ç³»ï¼ˆ-1~1ï¼‰è½¬åˆ°æ·±åº¦åæ ‡ç³»ï¼ˆ424*512ï¼‰
 							//myMapper->MapCameraPointToDepthSpace(joints[j].Position, &depthSpacePosition[j]);
 					}	
 
@@ -521,7 +521,7 @@ void CBodyBasics::ProcessBody(int nBodyCount, IBody ** aBodyData)
 					DrawHandState(leftHandState, depthSpacePosition[JointType_HandLeft]);
 					DrawHandState(rightHandState, depthSpacePosition[JointType_HandRight]);
 
-					// »ñÈ¡¹Ø½Ú·½Ïò
+					// è·å–å…³èŠ‚æ–¹å‘
 					JointOrientation aOrientations[JointType::JointType_Count];
 					if (myBody->GetJointOrientations(JointType::JointType_Count, aOrientations) != S_OK)
 					{
@@ -556,7 +556,7 @@ void CBodyBasics::ProcessBody(int nBodyCount, IBody ** aBodyData)
 					if (joints[JointType_SpineBase].Position.Z > 0.5&&joints[JointType_SpineBase].Position.Z<3.5)
 						Detection(joints);
 					else
-						cout << "ÎªÁË¼ì²âµÄ×¼È·¶È£¬Çë¾¡Á¿Õ¾ÔÚÀëKinect 0.5--3.5 Ã×Ö®¼ä£¬Ğ»Ğ»ÅäºÏ£¡" << endl;
+						cout << "ä¸ºäº†æ£€æµ‹çš„å‡†ç¡®åº¦ï¼Œè¯·å°½é‡ç«™åœ¨ç¦»Kinect 0.5--3.5 ç±³ä¹‹é—´ï¼Œè°¢è°¢é…åˆï¼" << endl;
 					
 				}
 				delete[] depthSpacePosition;
@@ -568,47 +568,47 @@ void CBodyBasics::ProcessBody(int nBodyCount, IBody ** aBodyData)
 	colornumber++;
 }
 
-//¼ì²â³ÌĞò
+//æ£€æµ‹ç¨‹åº
 void CBodyBasics::Detection(Joint joints[])
 {
 	
-	//¼ì²âËÙ¶ÈÌØÕ÷
+	//æ£€æµ‹é€Ÿåº¦ç‰¹å¾
 	static double tin, tout;
 	//double tframe;
-	//´óÔ¼30Ö¡Îª1s,¼ÆËãÃ¿ÏàÁÚ30Ö¡µÄ¸ß¶È²î£¬´Ó¶ø¼ÆËãËÙ¶È£¬1£¬31£¬62....
-	if (framenumber % 11 == 1)		//framenumberÊÇÖ¡ĞòÁĞºÅ£¬×Ô¼º¶¨ÒåµÄ
+	//å¤§çº¦30å¸§ä¸º1s,è®¡ç®—æ¯ç›¸é‚»30å¸§çš„é«˜åº¦å·®ï¼Œä»è€Œè®¡ç®—é€Ÿåº¦ï¼Œ1ï¼Œ31ï¼Œ62....
+	if (framenumber % 11 == 1)		//framenumberæ˜¯å¸§åºåˆ—å·ï¼Œè‡ªå·±å®šä¹‰çš„
 	{
 		tin = static_cast<double>(GetTickCount());
-		//cout << "tinÊÇ" << tin << endl;
+		//cout << "tinæ˜¯" << tin << endl;
 		SpineHeightin = joints[JointType_SpineMid].Position.Y;
-		//-cout << "µ±Ç°Ö¡ºÅÎª£º" << framenumber << endl;
-		//cout << "µ±Ç°SpineHeightinµÄ¸ß¶ÈÎª" << SpineHeightin << "  m"<<endl;
+		//-cout << "å½“å‰å¸§å·ä¸ºï¼š" << framenumber << endl;
+		//cout << "å½“å‰SpineHeightinçš„é«˜åº¦ä¸º" << SpineHeightin << "  m"<<endl;
 	}
 	if (!(framenumber % 11))
 	{
 		tout = static_cast<double>(GetTickCount());
 		cout << framenumber << endl;
-		//cout <<"toutÊÇ"<< tout << endl;
-		cout << "Ã¿10Ö¡¼ÆËãÒ»´ÎÏÂ½µµÄËÙ¶È" << endl;
+		//cout <<"toutæ˜¯"<< tout << endl;
+		cout << "æ¯10å¸§è®¡ç®—ä¸€æ¬¡ä¸‹é™çš„é€Ÿåº¦" << endl;
 		SpineHeightout = joints[JointType_SpineMid].Position.Y;
-		cout << "µ±Ç°Ö¡ºÅÎª£º" << framenumber << endl;
+		cout << "å½“å‰å¸§å·ä¸ºï¼š" << framenumber << endl;
 		 cout << "***********************************" << endl;
-		// cout << "µ±Ç°SpineHeightinµÄ¸ß¶ÈÎª" << SpineHeightin << "  m" << endl;
+		// cout << "å½“å‰SpineHeightinçš„é«˜åº¦ä¸º" << SpineHeightin << "  m" << endl;
 		//tframe = (tout - tin) / getTickFrequency();
 		// cout <<tframe << endl;
 		// cout << getTickFrequency()<<endl;
-		//cout << "µ±Ç°SpineHeightoutµÄ¸ß¶ÈÎª" << SpineHeightout << "  m" << endl;
+		//cout << "å½“å‰SpineHeightoutçš„é«˜åº¦ä¸º" << SpineHeightout << "  m" << endl;
 		//SpineV = (SpineHeightin - SpineHeightout) / tframe;
 		SpineV = SpineHeightin - SpineHeightout;
-		cout << "SpineVÊÇ¶àÉÙ£¿£¿" << SpineV << endl;
+		cout << "SpineVæ˜¯å¤šå°‘ï¼Ÿï¼Ÿ" << SpineV << endl;
 
-		// ÆÁÄ»ÉÏÏÔÊ¾ËÙ¶ÈĞÅÏ¢
+		// å±å¹•ä¸Šæ˜¾ç¤ºé€Ÿåº¦ä¿¡æ¯
 		char v[20];
 		sprintf_s(v, "downSpeed:%.4f", SpineV);
 		string strSpeedInfo = v;
 		putText(BodyImg, strSpeedInfo, cvPoint(0, 100), CV_FONT_HERSHEY_COMPLEX, 0.5, cvScalar(0, 0, 255)); 
 
-		if ((SpineV) > 0.35)	//ÎÄÏ×ÖĞ¸ø¶¨µÄÊı¾İÊÇ1.35m/s£¬Õâ¸ö¿ÉÄÜÒª¸ù¾İÊµ¼ÊÇé¿öÂÔÓĞµ÷Õû	
+		if ((SpineV) > 0.35)	//æ–‡çŒ®ä¸­ç»™å®šçš„æ•°æ®æ˜¯1.35m/sï¼Œè¿™ä¸ªå¯èƒ½è¦æ ¹æ®å®é™…æƒ…å†µç•¥æœ‰è°ƒæ•´	
 		{
 			vDetection = true;
 			tempnumber = framenumber;
@@ -616,16 +616,16 @@ void CBodyBasics::Detection(Joint joints[])
 			string str, str1;
 			stream0 << SpineV;
 			stream0 >> str;
-			str1 = "ÉíÌåÖĞĞÄÏòÏÂµÄËÙ¶ÈÊÇ£º " + str + " m/s\r\n";
-			cout << "ÉíÌåÖĞĞÄÏòÏÂµÄËÙ¶ÈÊÇ£º   " << (SpineV) << "    m/s" << endl;
+			str1 = "èº«ä½“ä¸­å¿ƒå‘ä¸‹çš„é€Ÿåº¦æ˜¯ï¼š " + str + " m/s\r\n";
+			cout << "èº«ä½“ä¸­å¿ƒå‘ä¸‹çš„é€Ÿåº¦æ˜¯ï¼š   " << (SpineV) << "    m/s" << endl;
 		}
 		else vDetection = false;
 	}
 
-	//¼ì²â¸ß¶ÈÌØÕ÷£¬¶ÔµØÃæµÄ¼ì²â£¬ÀëµØÃæµÄ¾àÀë¡£ÕâÀï×ª»¯ÎªspineºÍfootÖ®¼äµÄ¸ß¶È¡£
+	//æ£€æµ‹é«˜åº¦ç‰¹å¾ï¼Œå¯¹åœ°é¢çš„æ£€æµ‹ï¼Œç¦»åœ°é¢çš„è·ç¦»ã€‚è¿™é‡Œè½¬åŒ–ä¸ºspineå’Œfootä¹‹é—´çš„é«˜åº¦ã€‚
 	if ((joints[JointType_SpineBase].Position.Y - joints[JointType_FootRight].Position.Y) <= 0.5)//0.22
 	{
-		waitKey(15);//ÑÓÊ±¼ì²â£¬·ÀÖ¹ÎóÅĞ             waitkey()º¯ÊıµÄ×÷ÓÃÊÇ²»¶ÏË¢ĞÂÍ¼Ïñ£¬ÆµÂÊÊ±¼äÊÇdelay£¬µ¥Î»ÊÇms
+		waitKey(15);//å»¶æ—¶æ£€æµ‹ï¼Œé˜²æ­¢è¯¯åˆ¤             waitkey()å‡½æ•°çš„ä½œç”¨æ˜¯ä¸æ–­åˆ·æ–°å›¾åƒï¼Œé¢‘ç‡æ—¶é—´æ˜¯delayï¼Œå•ä½æ˜¯ms
 		if ((joints[JointType_SpineBase].Position.Y - joints[JointType_FootRight].Position.Y) <= 0.5)
 		{
 			if (vDetection)
@@ -637,17 +637,17 @@ void CBodyBasics::Detection(Joint joints[])
 				string str, str1, str2;
 				stream0 << joints[JointType_SpineBase].Position.Y;
 				stream0 >> str;
-				str1 = "JointType_SpineBaseµÄ¸ß¶ÈÊÇ£º " + str + " m\r\n";
+				str1 = "JointType_SpineBaseçš„é«˜åº¦æ˜¯ï¼š " + str + " m\r\n";
 				stream1 << joints[JointType_FootRight].Position.Y;
 				stream1 >> str;
-				str2 = "JointType_FootRightµÄ¸ß¶ÈÊÇ£º " + str + " m\r\n";
+				str2 = "JointType_FootRightçš„é«˜åº¦æ˜¯ï¼š " + str + " m\r\n";
 
-				cout << "JointType_SpineBaseµÄ¸ß¶ÈÊÇ  " << joints[JointType_SpineBase].Position.Y << "\tm" << endl;
+				cout << "JointType_SpineBaseçš„é«˜åº¦æ˜¯  " << joints[JointType_SpineBase].Position.Y << "\tm" << endl;
 				cout << "***************" << endl;
-				cout << "JointType_FootRightµÄ¸ß¶ÈÊÇ  " << joints[JointType_FootRight].Position.Y << "\tm" << endl;
-				cout << "***************" << "³É¹¦¼ì²âµøµ¹" << "***************" << endl;
+				cout << "JointType_FootRightçš„é«˜åº¦æ˜¯  " << joints[JointType_FootRight].Position.Y << "\tm" << endl;
+				cout << "***************" << "æˆåŠŸæ£€æµ‹è·Œå€’" << "***************" << endl;
 				
-				// ÆÁÄ»ÉÏÏÔÊ¾¸ß¶ÈĞÅÏ¢
+				// å±å¹•ä¸Šæ˜¾ç¤ºé«˜åº¦ä¿¡æ¯
 				char h1[20];
 				sprintf_s(h1, "SpineBaseH:%.4f", joints[JointType_SpineBase].Position.Y);
 				string strSpineBaseHInfo = h1;
@@ -657,10 +657,10 @@ void CBodyBasics::Detection(Joint joints[])
 				string strRightFootHInfo = h2;
 				putText(BodyImg, strRightFootHInfo, cvPoint(0, 170), CV_FONT_HERSHEY_COMPLEX, 0.5, cvScalar(0, 0, 255));
 
-				SaveBodyImg();	//¼ì²âµ½µøµ¹ÊÂ¼ş£¬±£´æµ±Ç°Í¼Æ¬ĞÅÏ¢
+				SaveBodyImg();	//æ£€æµ‹åˆ°è·Œå€’äº‹ä»¶ï¼Œä¿å­˜å½“å‰å›¾ç‰‡ä¿¡æ¯
 				SaveColorImg();
 				SaveDepthImg();
-				//SpeechDetection();		//ÓïÒôÑ¯ÎÊ
+				//SpeechDetection();		//è¯­éŸ³è¯¢é—®
 				SendEmail();
 				curl_test();
 			}
