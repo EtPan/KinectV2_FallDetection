@@ -97,16 +97,16 @@ void CBodyBasics::SaveBodyImg()
 {
 	stringstream stream0, stream1;
 	string str, filepath, str1;
-	filepath = "E:\\temp\\";			//设置固定保存路径
+	filepath = "E:\\temp\\";		//设置固定保存路径
 
 	if (filepath.empty())
-		filepath = "E:\\temp\\";			//设置默认固定保存路径
+		filepath = "E:\\temp\\";	//设置默认固定保存路径
 	else
 		filepath += "/";
 
 	//从选择文件夹里面获取当前选择的路径
-	stream1 << framenumber;        //从long型数据输入
-	stream1 >> str;					//转换为 string
+	stream1 << framenumber;                  //从long型数据输入
+	stream1 >> str;				 //转换为 string
 	str1 = "成功保存第 " + str + " 帧骨骼图\r\n";
 
 	if (BodyImg.data){
@@ -122,15 +122,15 @@ void CBodyBasics::SaveDepthImg()
 {
 	stringstream stream0, stream1;
 	string str, filepath, str1;
-	filepath = "E:\\temp\\";			//设置固定保存路径
+	filepath = "E:\\temp\\";		//设置固定保存路径
 
 	if (filepath.empty())
-		filepath = "E:\\temp\\";			//设置默认固定保存路径
+		filepath = "E:\\temp\\";	//设置默认固定保存路径
 	else
 		filepath += "/";
 
-	stream1 << depthnumber;        //从long型数据输入
-	stream1 >> str;					//转换为 string
+	stream1 << depthnumber;                 //从long型数据输入
+	stream1 >> str;				//转换为 string
 	str1 = "成功保存第 " + str + " 帧深度图\r\n";
 
 	if (DepthImg.data)
@@ -162,15 +162,15 @@ void CBodyBasics::SaveColorImg()
 	string str, filepath, str1;
 	//CMFC_DEMO01Dlg *pDlg0 = CMFC_DEMO01Dlg::s_pDlg;
 	filepath = "E:\\temp\\";			//设置固定保存路径
-									//从选择文件夹里面获取当前选择的路径
-									//filepath = (pDlg0->m_edit).GetBuffer(0);
+	//从选择文件夹里面获取当前选择的路径
+	//filepath = (pDlg0->m_edit).GetBuffer(0);
 	if (filepath.empty())
-		filepath = "E:\\temp\\";			//设置默认固定保存路径
+		filepath = "E:\\temp\\";		//设置默认固定保存路径
 	else
 		filepath += "/";
 
 	//从选择文件夹里面获取当前选择的路径
-	stream1 << colornumber;        //从long型数据输入
+	stream1 << colornumber;        			//从long型数据输入
 	stream1 >> str;					//转换为 string
 	str1 = "成功保存第 " + str + " 帧彩色图\r\n";
 	
@@ -192,13 +192,13 @@ void CBodyBasics::SpeechDetection()
 void CBodyBasics::SendEmail()
 {
 	CSmtp smtp(
-		25,								/*smtp端口*/
-		"smtp.163.com",					/*smtp服务器地址*/
-		"*******@163.com",	/*你的邮箱地址*/
-		"**********",					/*邮箱密码*/
-		"******@***.com",	/*目的邮箱地址*/
-		"WARNING",							/*主题*/
-		"家中有人跌倒！！！速来救助"		/*邮件正文*/
+		25,				/*smtp端口*/
+		"smtp.163.com",			/*smtp服务器地址*/
+		"*******@163.com",		/*你的邮箱地址*/
+		"**********",			/*邮箱密码*/
+		"******@***.com",		/*目的邮箱地址*/
+		"WARNING",			/*主题*/
+		"家中有人跌倒！！！速来救助"	     /*邮件正文*/
 		);
 
 	//添加附件时注意,\一定要写成\\，因为转义字符的缘故
@@ -315,7 +315,7 @@ void CBodyBasics::DrawHandState(HandState handState, const DepthSpacePoint handP
 	case HandState_Lasso:
 		color = cvScalar(0, 0, 255);	//手是介于张开和闭合的状态，用红色表示
 		break;
-	default:							//如果没有确定的手势，就不要画
+	default:				//如果没有确定的手势，就不要画
 		return;
 	}
 
