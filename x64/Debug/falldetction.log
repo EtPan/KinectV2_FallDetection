@@ -1,0 +1,37 @@
+﻿生成启动时间为 2018/4/26 14:23:24。
+     1>项目“G:\kinect\demo\0backup\falldetction_0426\falldetction\falldetction.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\inc" /ZI /nologo /W3 /WX- /sdl- /Od /D _DEBUG /D _CONSOLE /D WIN32_LEAN_AND_MEAN /D CURL_STATICLIB /D BUILDING_LIBCURL /D HTTP_ONLY_UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt main.cpp pKinect.cpp
+         pKinect.cpp
+     1>e:\software\opencv\build\include\opencv2\core\mat.hpp(2586): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\imgproc.hpp(592): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>g:\kinect\demo\0backup\falldetction_0426\falldetction\pkinect.cpp(232): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\time.h(505): note: 参见“localtime”的声明
+     1>g:\kinect\demo\0backup\falldetction_0426\falldetction\pkinect.cpp(293): warning C4244: “参数”: 从“const float”转换到“int”，可能丢失数据
+     1>g:\kinect\demo\0backup\falldetction_0426\falldetction\pkinect.cpp(297): warning C4244: “参数”: 从“const float”转换到“int”，可能丢失数据
+     1>g:\kinect\demo\0backup\falldetction_0426\falldetction\pkinect.cpp(322): warning C4244: “参数”: 从“const float”转换到“int”，可能丢失数据
+     1>g:\kinect\demo\0backup\falldetction_0426\falldetction\pkinect.cpp(343): warning C4244: “参数”: 从“const float”转换到“int”，可能丢失数据
+     1>g:\kinect\demo\0backup\falldetction_0426\falldetction\pkinect.cpp(344): warning C4244: “参数”: 从“const float”转换到“int”，可能丢失数据
+         正在生成代码...
+         正在编译...
+         main.cpp
+     1>e:\software\opencv\build\include\opencv2\core\mat.hpp(2586): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\software\opencv\build\include\opencv2\imgproc.hpp(592): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+         正在生成代码...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"G:\kinect\demo\0backup\falldetction_0426\x64\Debug\falldetction.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\Lib\x64" opencv_world320d.lib Kinect20.lib libcurl_a_debug.lib opencv_world320d.lib Kinect20.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"G:\kinect\demo\0backup\falldetction_0426\x64\Debug\falldetction.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\kinect\demo\0backup\falldetction_0426\x64\Debug\falldetction.lib" /MACHINE:X64 x64\Debug\KinectJointFilter.obj
+         x64\Debug\main.obj
+         x64\Debug\pKinect.obj
+         x64\Debug\Smtp.obj
+         falldetction.vcxproj -> G:\kinect\demo\0backup\falldetction_0426\x64\Debug\falldetction.exe
+     1>已完成生成项目“G:\kinect\demo\0backup\falldetction_0426\falldetction\falldetction.vcxproj”(Build 个目标)的操作。
+
+已成功生成。
+
+已用时间 00:00:06.33
