@@ -3,9 +3,9 @@
 #include <fstream>
 using namespace std;
 
-#pragma  comment(lib, "ws2_32.lib")	/*Á´½Óws2_32.lib¶¯Ì¬Á´½Ó¿â*/
+#pragma  comment(lib, "ws2_32.lib")	/*é“¾æ¥ws2_32.libåŠ¨æ€é“¾æ¥åº“*/
 
-/*base64²ÉÓÃ±ğÈËµÄ±àÂë,²»¹ı£¬Õâ²»ÊÇÖØµã£¬ÖØµãÊÇÎÒÍê³ÉÁËÎÒµÄÒ»¸ö±È½ÏºÃµÄÓÊ¼ş·¢ËÍ¿Í»§¶Ë*/
+/*base64é‡‡ç”¨åˆ«äººçš„ç¼–ç */
 char* CSmtp::base64Encode(char const* origSigned, unsigned origLength)
 {
 	unsigned char const* orig = (unsigned char const*)origSigned; // in case any input bytes have the MSB set
@@ -102,20 +102,20 @@ CSmtp::CSmtp(
 
 bool CSmtp::CreateConn()
 {
-	//Îª½¨Á¢socket¶ÔÏó×ö×¼±¸£¬³õÊ¼»¯»·¾³
-	SOCKET sockClient = socket(AF_INET, SOCK_STREAM, 0); //½¨Á¢socket¶ÔÏó
+	//ä¸ºå»ºç«‹socketå¯¹è±¡åšå‡†å¤‡ï¼Œåˆå§‹åŒ–ç¯å¢ƒ
+	SOCKET sockClient = socket(AF_INET, SOCK_STREAM, 0); //å»ºç«‹socketå¯¹è±¡
 	SOCKADDR_IN addrSrv;
 	HOSTENT* pHostent;
- 	pHostent = gethostbyname(domain.c_str());  //µÃµ½ÓĞ¹ØÓÚÓòÃûµÄĞÅÏ¢
+ 	pHostent = gethostbyname(domain.c_str());  //å¾—åˆ°æœ‰å…³äºåŸŸåçš„ä¿¡æ¯
 
-	addrSrv.sin_addr.S_un.S_addr = *((DWORD *)pHostent->h_addr_list[0]);	//µÃµ½smtp·şÎñÆ÷µÄÍøÂç×Ö½ÚĞòµÄipµØÖ·   
+	addrSrv.sin_addr.S_un.S_addr = *((DWORD *)pHostent->h_addr_list[0]);	//å¾—åˆ°smtpæœåŠ¡å™¨çš„ç½‘ç»œå­—èŠ‚åºçš„ipåœ°å€   
 	addrSrv.sin_family = AF_INET;
 	addrSrv.sin_port = htons(port);
-	int err = connect(sockClient, (SOCKADDR*)&addrSrv, sizeof(SOCKADDR));   //Ïò·şÎñÆ÷·¢ËÍÇëÇó 
+	int err = connect(sockClient, (SOCKADDR*)&addrSrv, sizeof(SOCKADDR));   //å‘æœåŠ¡å™¨å‘é€è¯·æ±‚ 
 	if (err != 0)
 	{
 		return false;
-		//printf("Á´½ÓÊ§°Ü\n");
+		//printf("é“¾æ¥å¤±è´¥\n");
 	}
 	this->sockClient = sockClient;
 	if (false == Recv())
@@ -139,7 +139,7 @@ bool CSmtp::Send(string &message)
 bool CSmtp::Recv()
 {
 	memset(buff, 0, sizeof(char)* (MAXLEN + 1));
-	int err = recv(sockClient, buff, MAXLEN, 0); //½ÓÊÕÊı¾İ
+	int err = recv(sockClient, buff, MAXLEN, 0); //æ¥æ”¶æ•°æ®
 	if (err == SOCKET_ERROR)
 	{
 		return false;
@@ -156,24 +156,24 @@ int CSmtp::Login()
 	sendBuff += user;
 	sendBuff += "\r\n";
 
-	if (false == Send(sendBuff) || false == Recv()) //¼È½ÓÊÕÒ²·¢ËÍ
+	if (false == Send(sendBuff) || false == Recv()) //æ—¢æ¥æ”¶ä¹Ÿå‘é€
 	{
-		return 1; /*1±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó*/
+		return 1; /*1è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯*/
 	}
 
 	sendBuff.empty();
 	sendBuff = "AUTH LOGIN\r\n";
-	if (false == Send(sendBuff) || false == Recv()) //ÇëÇóµÇÂ½
+	if (false == Send(sendBuff) || false == Recv()) //è¯·æ±‚ç™»é™†
 	{
-		return 1; /*1±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó*/
+		return 1; /*1è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯*/
 	}
 
 	sendBuff.empty();
 	int pos = user.find('@', 0);
-	sendBuff = user.substr(0, pos); //µÃµ½ÓÃ»§Ãû
+	sendBuff = user.substr(0, pos); //å¾—åˆ°ç”¨æˆ·å
 
 	char *ecode;
-	/*ÔÚÕâÀïË³´ø³¶Ò»¾ä£¬¹ØÓÚstringÀàµÄlengthº¯ÊıÓëCÓïÑÔÖĞµÄstrlenº¯ÊıµÄÇø±ğ,strlen¼ÆËã³öÀ´µÄ³¤¶È£¬Ö»µ½'\0'×Ö·ûÎªÖ¹,¶østring::length()º¯ÊıÊµ¼ÊÉÏ·µ»ØµÄÊÇstringÀàÖĞ×Ö·ûÊı×éµÄ´óĞ¡,Äã×Ô¼º¿ÉÒÔ²âÊÔÒ»ÏÂ£¬ÕâÒ²ÊÇÎªÊ²Ã´ÎÒÏÂÃæ²»Ê¹ÓÃstring::length()µÄÔ­Òò*/
+	/*åœ¨è¿™é‡Œé¡ºå¸¦æ‰¯ä¸€å¥ï¼Œå…³äºstringç±»çš„lengthå‡½æ•°ä¸Cè¯­è¨€ä¸­çš„strlenå‡½æ•°çš„åŒºåˆ«,strlenè®¡ç®—å‡ºæ¥çš„é•¿åº¦ï¼Œåªåˆ°'\0'å­—ç¬¦ä¸ºæ­¢,è€Œstring::length()å‡½æ•°å®é™…ä¸Šè¿”å›çš„æ˜¯stringç±»ä¸­å­—ç¬¦æ•°ç»„çš„å¤§å°,ä½ è‡ªå·±å¯ä»¥æµ‹è¯•ä¸€ä¸‹ï¼Œè¿™ä¹Ÿæ˜¯ä¸ºä»€ä¹ˆæˆ‘ä¸‹é¢ä¸ä½¿ç”¨string::length()çš„åŸå› */
 
 	ecode = base64Encode(sendBuff.c_str(), strlen(sendBuff.c_str()));
 	sendBuff.empty();
@@ -181,9 +181,9 @@ int CSmtp::Login()
 	sendBuff += "\r\n";
 	delete[]ecode;
 
-	if (false == Send(sendBuff) || false == Recv()) //·¢ËÍÓÃ»§Ãû£¬²¢½ÓÊÕ·şÎñÆ÷µÄ·µ»Ø
+	if (false == Send(sendBuff) || false == Recv()) //å‘é€ç”¨æˆ·åï¼Œå¹¶æ¥æ”¶æœåŠ¡å™¨çš„è¿”å›
 	{
-		return 1; /*´íÎóÂë1±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó*/
+		return 1; /*é”™è¯¯ç 1è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯*/
 	}
 
 	sendBuff.empty();
@@ -192,30 +192,30 @@ int CSmtp::Login()
 	sendBuff += "\r\n";
 	delete[]ecode;
 
-	if (false == Send(sendBuff) || false == Recv()) //·¢ËÍÓÃ»§ÃÜÂë£¬²¢½ÓÊÕ·şÎñÆ÷µÄ·µ»Ø
+	if (false == Send(sendBuff) || false == Recv()) //å‘é€ç”¨æˆ·å¯†ç ï¼Œå¹¶æ¥æ”¶æœåŠ¡å™¨çš„è¿”å›
 	{
-		return 1; /*´íÎóÂë1±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó*/
+		return 1; /*é”™è¯¯ç 1è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯*/
 	}
 
 	if (NULL != strstr(buff, "550"))
 	{
-		return 2;/*´íÎóÂë2±íÊ¾ÓÃ»§Ãû´íÎó*/
+		return 2;/*é”™è¯¯ç 2è¡¨ç¤ºç”¨æˆ·åé”™è¯¯*/
 	}
 
-	if (NULL != strstr(buff, "535")) /*535ÊÇÈÏÖ¤Ê§°ÜµÄ·µ»Ø*/
+	if (NULL != strstr(buff, "535")) /*535æ˜¯è®¤è¯å¤±è´¥çš„è¿”å›*/
 	{
-		return 3; /*´íÎóÂë3±íÊ¾ÃÜÂë´íÎó*/
+		return 3; /*é”™è¯¯ç 3è¡¨ç¤ºå¯†ç é”™è¯¯*/
 	}
 	return 0;
 }
 
-bool CSmtp::SendEmailHead()		//·¢ËÍÓÊ¼şÍ·²¿ĞÅÏ¢
+bool CSmtp::SendEmailHead()		//å‘é€é‚®ä»¶å¤´éƒ¨ä¿¡æ¯
 {
 	string sendBuff;
 	sendBuff = "MAIL FROM: <" + user + ">\r\n";
 	if (false == Send(sendBuff) || false == Recv())
 	{
-		return false; /*±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó*/
+		return false; /*è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯*/
 	}
 
 
@@ -223,28 +223,28 @@ bool CSmtp::SendEmailHead()		//·¢ËÍÓÊ¼şÍ·²¿ĞÅÏ¢
 	sendBuff = "RCPT TO: <" + targetAddr + ">\r\n";
 	if (false == Send(sendBuff) || false == Recv())
 	{
-		return false; /*±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó*/
+		return false; /*è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯*/
 	}
 
 	sendBuff.empty();
 	sendBuff = "DATA\r\n";
 	if (false == Send(sendBuff) || false == Recv())
 	{
-		return false; //±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó
+		return false; //è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯
 	}
 
 	sendBuff.empty();
 	FormatEmailHead(sendBuff);
 	if (false == Send(sendBuff))
-		//·¢ËÍÍêÍ·²¿Ö®ºó²»±Øµ÷ÓÃ½ÓÊÕº¯Êı,ÒòÎªÄãÃ»ÓĞ\r\n.\r\n½áÎ²£¬·şÎñÆ÷ÈÏÎªÄãÃ»ÓĞ·¢ÍêÊı¾İ£¬ËùÒÔ²»»á·µ»ØÊ²Ã´Öµ
+		//å‘é€å®Œå¤´éƒ¨ä¹‹åä¸å¿…è°ƒç”¨æ¥æ”¶å‡½æ•°,å› ä¸ºä½ æ²¡æœ‰\r\n.\r\nç»“å°¾ï¼ŒæœåŠ¡å™¨è®¤ä¸ºä½ æ²¡æœ‰å‘å®Œæ•°æ®ï¼Œæ‰€ä»¥ä¸ä¼šè¿”å›ä»€ä¹ˆå€¼
 	{
-		return false; /*±íÊ¾·¢ËÍÊ§°ÜÓÉÓÚÍøÂç´íÎó*/
+		return false; /*è¡¨ç¤ºå‘é€å¤±è´¥ç”±äºç½‘ç»œé”™è¯¯*/
 	}
 	return true;
 }
 
 void CSmtp::FormatEmailHead(string &email)
-{/*¸ñÊ½»¯Òª·¢ËÍµÄÄÚÈİ*/
+{/*æ ¼å¼åŒ–è¦å‘é€çš„å†…å®¹*/
 	email = "From: ";
 	email += user;
 	email += "\r\n";
@@ -265,7 +265,7 @@ void CSmtp::FormatEmailHead(string &email)
 	email += "\r\n";
 }
 
-bool CSmtp::SendTextBody()  /*·¢ËÍÓÊ¼şÎÄ±¾*/
+bool CSmtp::SendTextBody()  /*å‘é€é‚®ä»¶æ–‡æœ¬*/
 {
 	string sendBuff;
 	sendBuff = "--qwertyuiop\r\n";
@@ -276,7 +276,7 @@ bool CSmtp::SendTextBody()  /*·¢ËÍÓÊ¼şÎÄ±¾*/
 	return Send(sendBuff);
 }
 
-int CSmtp::SendAttachment_Ex() /*·¢ËÍ¸½¼ş*/
+int CSmtp::SendAttachment_Ex() /*å‘é€é™„ä»¶*/
 {
 	for (list<FILEINFO *>::iterator pIter = listFile.begin(); pIter != listFile.end(); pIter++)
 	{
@@ -302,12 +302,12 @@ int CSmtp::SendAttachment_Ex() /*·¢ËÍ¸½¼ş*/
 		ifstream ifs((*pIter)->filePath, ios::in | ios::binary);
 		if (false == ifs.is_open())
 		{
-			return 4; /*´íÎóÂë4±íÊ¾ÎÄ¼ş´ò¿ª´íÎó*/
+			return 4; /*é”™è¯¯ç 4è¡¨ç¤ºæ–‡ä»¶æ‰“å¼€é”™è¯¯*/
 		}
 		char fileBuff[MAX_FILE_LEN];
 		char *chSendBuff;
 		memset(fileBuff, 0, sizeof(fileBuff));
-		/*ÎÄ¼şÊ¹ÓÃbase64¼ÓÃÜ´«ËÍ*/
+		/*æ–‡ä»¶ä½¿ç”¨base64åŠ å¯†ä¼ é€*/
 		while (ifs.read(fileBuff, MAX_FILE_LEN))
 		{
 			//cout << ifs.gcount() << endl;
@@ -325,7 +325,7 @@ int CSmtp::SendAttachment_Ex() /*·¢ËÍ¸½¼ş*/
 
 		if (err != strlen(chSendBuff))
 		{
-			cout << "ÎÄ¼ş´«ËÍ³ö´í!" << endl;
+			cout << "æ–‡ä»¶ä¼ é€å‡ºé”™!" << endl;
 			return 1;
 		}
 		delete[]chSendBuff;
@@ -333,7 +333,7 @@ int CSmtp::SendAttachment_Ex() /*·¢ËÍ¸½¼ş*/
 	return 0;
 }
 
-bool CSmtp::SendEnd() /*·¢ËÍ½áÎ²ĞÅÏ¢*/
+bool CSmtp::SendEnd() /*å‘é€ç»“å°¾ä¿¡æ¯*/
 {
 	string sendBuff;
 	sendBuff = "--qwertyuiop--";
@@ -355,18 +355,18 @@ int CSmtp::SendEmail_Ex()
 		return 1;
 	}
 	//Recv();
-	int err = Login(); //ÏÈµÇÂ¼
+	int err = Login(); //å…ˆç™»å½•
 	if (err != 0)
 	{
-		return err; //´íÎó´úÂë±ØĞëÒª·µ»Ø
+		return err; //é”™è¯¯ä»£ç å¿…é¡»è¦è¿”å›
 	}
-	if (false == SendEmailHead()) //·¢ËÍEMAILÍ·²¿ĞÅÏ¢
+	if (false == SendEmailHead()) //å‘é€EMAILå¤´éƒ¨ä¿¡æ¯
 	{
-		return 1; /*´íÎóÂë1ÊÇÓÉÓÚÍøÂçµÄ´íÎó*/
+		return 1; /*é”™è¯¯ç 1æ˜¯ç”±äºç½‘ç»œçš„é”™è¯¯*/
 	}
 	if (false == SendTextBody())
 	{
-		return 1; /*´íÎóÂë1ÊÇÓÉÓÚÍøÂçµÄ´íÎó*/
+		return 1; /*é”™è¯¯ç 1æ˜¯ç”±äºç½‘ç»œçš„é”™è¯¯*/
 	}
 	err = SendAttachment_Ex();
 	if (err != 0)
@@ -375,12 +375,12 @@ int CSmtp::SendEmail_Ex()
 	}
 	if (false == SendEnd())
 	{
-		return 1; /*´íÎóÂë1ÊÇÓÉÓÚÍøÂçµÄ´íÎó*/
+		return 1; /*é”™è¯¯ç 1æ˜¯ç”±äºç½‘ç»œçš„é”™è¯¯*/
 	}
-	return 0; /*0±íÊ¾Ã»ÓĞ³ö´í*/
+	return 0; /*0è¡¨ç¤ºæ²¡æœ‰å‡ºé”™*/
 }
 
-void CSmtp::AddAttachment(string &filePath) //Ìí¼Ó¸½¼ş
+void CSmtp::AddAttachment(string &filePath) //æ·»åŠ é™„ä»¶
 {
 	FILEINFO *pFile = new FILEINFO;
 	strcpy_s(pFile->filePath, filePath.c_str());
@@ -389,7 +389,7 @@ void CSmtp::AddAttachment(string &filePath) //Ìí¼Ó¸½¼ş
 	listFile.push_back(pFile);
 }
 
-void CSmtp::DeleteAttachment(string &filePath) //É¾³ı¸½¼ş
+void CSmtp::DeleteAttachment(string &filePath) //åˆ é™¤é™„ä»¶
 {
 	list<FILEINFO *>::iterator pIter;
 	for (pIter = listFile.begin(); pIter != listFile.end(); pIter++)
@@ -404,7 +404,7 @@ void CSmtp::DeleteAttachment(string &filePath) //É¾³ı¸½¼ş
 	}
 }
 
-void CSmtp::DeleteAllAttachment() /*É¾³ıËùÓĞµÄÎÄ¼ş*/
+void CSmtp::DeleteAllAttachment() /*åˆ é™¤æ‰€æœ‰çš„æ–‡ä»¶*/
 {
 	for (list<FILEINFO *>::iterator pIter = listFile.begin(); pIter != listFile.end();)
 	{
